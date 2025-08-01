@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from "react";
 
-/* eslint-disable @next/next/no-img-element */
 export default function CalculatorInterface() {
   const [day, setDay] = useState(0 || "");
   const [month, setMonth] = useState(0 || "");
@@ -80,7 +79,6 @@ export default function CalculatorInterface() {
   };
 
   useEffect(() => {
-    // Only calculate if all fields are filled
     if (day && month && year) {
       const today = new Date();
       const birthDate = new Date(Number(year), Number(month) - 1, Number(day));

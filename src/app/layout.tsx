@@ -4,9 +4,8 @@ import './globals.css'
 
 const inter = Inter({ subsets: ['latin'] })
 
-
 export const metadata: Metadata = {
-  title: 'Age Calculator',
+  title: 'Age',
   description: 'Calculate your age within seconds',
 }
 
@@ -17,6 +16,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        <link rel="icon" href="/favicon.png" type="image/png" />
+      </head>
       <body>{children}</body>
     </html>
   )
