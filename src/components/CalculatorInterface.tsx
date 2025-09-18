@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-
 export default function CalculatorInterface() {
   const [day, setDay] = useState(0 || "");
   const [month, setMonth] = useState(0 || "");
@@ -11,29 +10,25 @@ export default function CalculatorInterface() {
   const [ageDays, setAgeDays] = useState("--");
   const [calculated, setCalculated] = useState(false);
   const currentYear = 2025;
-
   const dayRef = useRef<HTMLInputElement>(null);
   const monthRef = useRef<HTMLInputElement>(null);
   const yearRef = useRef<HTMLInputElement>(null);
-
   const padStart = (
     value: number | string,
     targetLength: number,
-    padChar: string = "0"
+    padChar: string = "0",
   ): string => {
     const stringValue = String(value);
     return stringValue.length >= targetLength
       ? stringValue
       : (padChar.repeat(targetLength) + stringValue).slice(-targetLength);
   };
-
   const triggerWarn = (parentNode: any, childNode: any) => {
     parentNode.querySelector("input").style.borderColor = "#FF5757";
     parentNode.querySelector(".warn-text").hidden = false;
     childNode.color = "FF5757#";
     childNode.fontWeight = "bold";
   };
-
   const removeWarn = (parentNode: any, childNode: any) => {
     parentNode.querySelector("input").style.borderColor = null;
     parentNode.querySelector(".warn-text").hidden = true;
@@ -41,11 +36,9 @@ export default function CalculatorInterface() {
     childNode.fontWeight = null;
     childNode.borderColor = null;
   };
-
   const handleDay = (e: any) => {
     let parentNode = e.target.parentNode.parentNode;
     let childNode = parentNode.querySelector("#d-label").style;
-
     if (e.target.value > 31) {
       triggerWarn(parentNode, childNode);
     } else {
@@ -53,11 +46,9 @@ export default function CalculatorInterface() {
       removeWarn(parentNode, childNode);
     }
   };
-
   const handleMonth = (e: any) => {
     let parentNode = e.target.parentNode.parentNode;
     let childNode = parentNode.querySelector("#m-label").style;
-
     if (e.target.value > 12) {
       triggerWarn(parentNode, childNode);
     } else {
@@ -65,11 +56,9 @@ export default function CalculatorInterface() {
       removeWarn(parentNode, childNode);
     }
   };
-
   const handleYear = (e: any) => {
     let parentNode = e.target.parentNode.parentNode;
     let childNode = parentNode.querySelector("#y-label").style;
-
     if (e.target.value > 2024) {
       triggerWarn(parentNode, childNode);
     } else {
@@ -77,19 +66,15 @@ export default function CalculatorInterface() {
       removeWarn(parentNode, childNode);
     }
   };
-
   useEffect(() => {
     if (day && month && year) {
       const today = new Date();
       const birthDate = new Date(Number(year), Number(month) - 1, Number(day));
-
       let years = today.getFullYear() - birthDate.getFullYear();
       let months = today.getMonth() - birthDate.getMonth();
       let days = today.getDate() - birthDate.getDate();
-
       if (days < 0) {
         months -= 1;
-        // Get days in previous month
         const prevMonth = new Date(today.getFullYear(), today.getMonth(), 0);
         days += prevMonth.getDate();
       }
@@ -97,19 +82,17 @@ export default function CalculatorInterface() {
         years -= 1;
         months += 12;
       }
-
       setAgeYears(years >= 0 ? padStart(years, 2) : "--");
       setAgeMonths(months >= 0 ? padStart(months, 2) : "--");
       setAgeDays(days >= 0 ? padStart(days, 2) : "--");
-      setCalculated(true); // Show arrow
+      setCalculated(true);
     } else {
       setAgeYears("--");
       setAgeMonths("--");
       setAgeDays("--");
-      setCalculated(false); // Hide arrow
+      setCalculated(false);
     }
   }, [day, month, year]);
-
   return (
     <div className="shadow-2xl max-md:space-y-5 bg-white shadow-neutral-400 w-fit p-14 max-md:px-5 rounded-xl rounded-br-[200px] max-md:rounded-br-[125px]">
       <div className="flex max-md:justify-center justify-between gap-5 w-[500px] max-md:w-[85vw] text-[#716F6F] font-semibold text-xs max-md:text-md">
@@ -124,7 +107,7 @@ export default function CalculatorInterface() {
               type="text"
               placeholder="DD"
               onChange={handleDay}
-              onKeyDown={e => {
+              onKeyDown={(e) => {
                 if (e.key === "Enter") {
                   monthRef.current?.focus();
                 }
@@ -149,7 +132,7 @@ export default function CalculatorInterface() {
               type="text"
               placeholder="MM"
               onChange={handleMonth}
-              onKeyDown={e => {
+              onKeyDown={(e) => {
                 if (e.key === "Enter") {
                   yearRef.current?.focus();
                 }
@@ -189,9 +172,12 @@ export default function CalculatorInterface() {
         {calculated && (
           <span
             className="absolute right-0 bg-[#854DFF] p-4 rounded-full flex items-center justify-center shadow-lg"
-            style={{ top: "50%", transform: "translateY(-50%)" }}
+            style={{
+              top: "50%",
+              transform: "translateY(-50%)",
+            }}
           >
-            {/* Arrow SVG */}
+            {}
             <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
               <circle cx="16" cy="16" r="16" fill="#854DFF" />
               <path
@@ -214,15 +200,11 @@ export default function CalculatorInterface() {
           <span>years</span>
         </div>
         <div className="space-x-5 max-md:space-x-3">
-          <span className="text-[#854DFF] align-top">
-            {ageMonths}
-          </span>
+          <span className="text-[#854DFF] align-top">{ageMonths}</span>
           <span>months</span>
         </div>
         <div className="space-x-5 max-md:space-x-3">
-          <span className="text-[#854DFF] align-top  ">
-            {ageDays}
-          </span>
+          <span className="text-[#854DFF] align-top  ">{ageDays}</span>
           <span>days</span>
         </div>
       </div>
